@@ -1,0 +1,17 @@
+{
+  "name": "recursivetreemanager",
+  "homepage": "https://github.com/cvimbert/recursivetreemanager",
+  "authors": [
+    "Christophe Vimbert <c.vimbert@outlook.fr>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
