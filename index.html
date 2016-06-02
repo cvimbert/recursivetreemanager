@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="bower_components/requirejs/require.js"></script>
+    <script src="config.js"></script>
+</head>
+<body>
+<script>
+    require(["recursivetreemanager"], function(RecursiveTreeManager) {
+
+        var datas = {
+            text: "A masquer",
+            id: "t0",
+            ico_type: 2,
+            settings: {
+                rotation: Math.PI / 4 * 3,
+                deployed: true
+            },
+            children: [
+                {
+                    text: "LES COMMENTAIRES",
+                    id: "t4",
+                    ico_type: 0,
+                    settings: {
+                        angularMargin: 0.8,
+                        noLine: true,
+                        xOffset: 38,
+                        yOffset: 5
+                    },
+                    children: [
+                        {
+                            text: "RACHI",
+                            id: "t4-1",
+                            ico_type: 1
+                        },
+                        {
+                            text: "RAMBAM",
+                            id: "t4-2",
+                            ico_type: 1
+                        }
+                    ]
+                },
+                {
+                    text: "LE TANAKH",
+                    id: "t3",
+                    ico_type: 0,
+                    settings: {
+                        noLine: true,
+                        angularMargin: 0
+                    },
+                    children: [
+                        {
+                            text: "LA TORAH",
+                            id: "t3-1",
+                            ico_type: 1,
+                            settings: {
+                                fromAngle: Math.PI - 0.6,
+                                toAngle: -0.4,
+                                xOffset: -100
+                            },
+                            children: [
+                                {
+                                    text: "LE DEUTÉRONOME",
+                                    id: "t3-1-1",
+                                    ico_type: 2
+                                },
+                                {
+                                    text: "LES NOMBRES",
+                                    id: "t3-1-2",
+                                    ico_type: 2
+                                },
+                                {
+                                    text: "LE LÉVITIQUE",
+                                    id: "t3-1-3",
+                                    ico_type: 2
+                                },
+                                {
+                                    text: "L’EXODE",
+                                    id: "t3-1-4",
+                                    ico_type: 2
+                                },
+                                {
+                                    text: "LA GENÈSE",
+                                    id: "t3-1-5",
+                                    ico_type: 2
+                                }
+                            ]
+                        },
+                        {
+                            text: "LES NÉVIIM",
+                            id: "t3-2",
+                            ico_type: 1,
+                            settings: {
+                                radius: 260
+                            },
+                            children: [
+                                {
+                                    text: "LES PREMIERS PROPHÈTES",
+                                    id: "t3-2-1",
+                                    ico_type: 2
+                                },
+                                {
+                                    text: "LES DERNIERS PROPHÈTES",
+                                    id: "t3-2-2",
+                                    ico_type: 2
+                                }
+                            ]
+                        },
+                        {
+                            text: "LES KÉTOUVIM",
+                            id: "t3-3",
+                            ico_type: 1,
+                            settings: {
+                                fromAngle: 5,
+                                toAngle: 5 + Math.PI / 2 + 0.2,
+                                radius: 260
+                            },
+                            children: [
+                                {
+                                    text: "LES SEPT LIVRES DES KÉTOUVIM",
+                                    id: "t3-3-1",
+                                    ico_type: 2
+                                },
+                                {
+                                    text: "LES CINQ ROULEAUX",
+                                    id: "t3-3-2",
+                                    ico_type: 2
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    text: "LE TALMUD",
+                    id: "t2",
+                    ico_type: 0,
+                    settings: {
+                        noLine: true,
+                        angularMargin: 0.7,
+                        yOffset: -40
+                    },
+                    children: [
+                        {
+                            text: "LA MICHNA",
+                            id: "t2-1",
+                            ico_type: 1
+                        },
+                        {
+                            text: "LA GUEMARA",
+                            id: "t2-2",
+                            ico_type: 1
+                        }
+                    ]
+                },
+                {
+                    text: "LE MIDRACH",
+                    id: "t1",
+                    ico_type: 0,
+                    settings: {
+                        noLine: true
+                    }
+                }
+            ]
+        };
+
+        var treeManager = new RecursiveTreeManager(datas);
+
+
+
+    });
+</script>
+</body>
+</html>
