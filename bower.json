@@ -15,6 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "requirejs": "^2.2.0"
+    "requirejs": "^2.2.0",
+    "underscore": "^1.8.3",
+    "dynamicpoint": "https://github.com/cvimbert/dynamicpoint.git"
+  },
+  "devDependencies": {
+    "pinit": "https://github.com/cvimbert/PinIt.git"
   }
 }

@@ -36,6 +36,8 @@ require.config({
         marionette: 'bower_components/backbone.marionette/lib/backbone.marionette',
         pinit: 'bower_components/src/pinit',
         svgsurface: "bower_components/svgsurface/svgsurface",
+        dynamicpoint: "bower_components/dynamicpoint/src/dynamicpoint",
+        pinit: "bower_components/pinit/src/pinit",
         recursivetreemanager: "src/recursivetreemanager"
     },
     map: {

@@ -8,7 +8,7 @@
 </head>
 <body>
 <script>
-    require(["recursivetreemanager"], function(RecursiveTreeManager) {
+    require(["recursivetreemanager", "pinit", "marionette", "jquery", "Draggable"], function(RecursiveTreeManager, PinIt, Marionette, $, Draggable) {
 
         var datas = {
             text: "A masquer",
@@ -165,8 +165,51 @@
             ]
         };
 
-        var treeManager = new RecursiveTreeManager(datas);
+        var treeManager = new RecursiveTreeManager({
+            datas: datas,
+            radiusList: [200, 290, 290],
+            angularMargin: 0.2
+        });
 
+        var pinIt = new PinIt({
+            props: {
+                x: 0,
+                y: 0
+            },
+            bindings: {
+                x: {
+                    css: "x"
+                },
+                y: {
+                    css: "y"
+                }
+            }
+        });
+
+        var nodes = treeManager.getNodesList();
+
+        var testView = Marionette.ItemView.extend({
+            template: function() {
+                return '<div class="elem" style="background-color: red; position: absolute; width: 50px; height: 50px"></div>';
+            },
+            onRender: function() {
+                Draggable.create($(".elem", this.$el));
+            }
+        });
+
+        _.each(nodes, function(node) {
+            var elem = $("<div></div>");
+            $("body").append(elem);
+
+            var view = new testView({
+                el: elem
+            });
+
+            view.render();
+
+            pinIt.bind(node.dynamicAttributes, $(".elem", view.$el));
+
+        });
 
 
     });
