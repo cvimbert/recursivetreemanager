@@ -134,7 +134,7 @@
                 if (divPoints.length > 0) {
 
                     _.each(divPoints, function(divPoint) {
-                        t.recursiveGeneratePositions(basePoint, divPoint.point, divPoint.angle, _.clone(stack));
+                        divPoint.node.recursiveGeneratePositions(basePoint, divPoint.point, divPoint.angle, _.clone(stack));
                     });
                 }
             };
@@ -274,17 +274,6 @@
 
         //console.log(rootNode.getNodes());
 
-        //rootNode.generatePositions();
-
-        //var centerView = recursiveDisplay(options.datas, {x: options.baseX, y: options.baseY}, {x: options.baseX, y: options.baseY}, {}, []);
         rootNode.recursiveGeneratePositions({x: 400, y: 300}, {x: 400, y: 300}, {}, []);
-
-        /*_.each(rootNode.children, function(child) {
-            console.log("x: " + child.dynamicAttributes.get("x"));
-            console.log("y: " + child.dynamicAttributes.get("y"));
-        });*/
-
-        /*console.log(rootNode);
-        console.log(rootNode.getNodeDivision());*/
     }
 });
