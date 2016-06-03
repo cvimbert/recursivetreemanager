@@ -1,7 +1,4 @@
 /**
- * Created by Christophe on 02/06/2016.
- */
-/**
  * Created by Christophe on 19/05/2016.
  */
 require.config({

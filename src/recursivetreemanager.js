@@ -117,6 +117,29 @@
             };
 
 
+            this.recursiveGeneratePositions = function(basePoint, tpoint, angle, stack) {
+
+                var t = this;
+                if (!stack) stack = [];
+
+                var radius = config.radiusList[stack.length];
+
+                var overVal = this.getSetting("radius");
+                if (overVal) radius = overVal;
+
+                var divPoints = this.generatePositions(angle.from, angle.to, stack);
+
+                stack.push(divPoints);
+
+                if (divPoints.length > 0) {
+
+                    _.each(divPoints, function(divPoint) {
+                        t.recursiveGeneratePositions(basePoint, divPoint.point, divPoint.angle, _.clone(stack));
+                    });
+                }
+            };
+
+
             this.generatePositions = function(fromAngle, toAngle, stack) {
                 var t = this;
 
@@ -251,7 +274,10 @@
 
         //console.log(rootNode.getNodes());
 
-        rootNode.generatePositions();
+        //rootNode.generatePositions();
+
+        //var centerView = recursiveDisplay(options.datas, {x: options.baseX, y: options.baseY}, {x: options.baseX, y: options.baseY}, {}, []);
+        rootNode.recursiveGeneratePositions({x: 400, y: 300}, {x: 400, y: 300}, {}, []);
 
         /*_.each(rootNode.children, function(child) {
             console.log("x: " + child.dynamicAttributes.get("x"));

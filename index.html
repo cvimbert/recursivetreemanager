@@ -5,8 +5,10 @@
     <title>Test</title>
     <script src="bower_components/requirejs/require.js"></script>
     <script src="config.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<div id="container"></div>
 <script>
     require(["recursivetreemanager", "pinit", "marionette", "jquery", "Draggable"], function(RecursiveTreeManager, PinIt, Marionette, $, Draggable) {
 
@@ -199,7 +201,7 @@
 
         _.each(nodes, function(node) {
             var elem = $("<div></div>");
-            $("body").append(elem);
+            $("#container").append(elem);
 
             var view = new testView({
                 el: elem
