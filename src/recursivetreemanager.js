@@ -254,6 +254,56 @@
         };
 
 
+        this.getChildIndex = function(node) {
+            return this.children.lastIndexOf(node);
+        };
+
+
+        this.deleteChildReference = function(node) {
+            var index = this.getChildIndex(node);
+
+            if (index !== -1) {
+                delete this.children[index];
+            }
+        };
+
+
+        this.delete = function() {
+
+            _.each(this.children, function(child) {
+                child.delete();
+            });
+
+            if (this.parent) {
+                this.parent.deleteChildReference(this);
+            }
+        };
+
+
+        this.swapWithBrother = function(node) {
+            this.parent.swapChildren(this, node);
+        };
+
+
+        this.swapChildren = function(node1, node2) {
+            var index1 = this.getChildIndex(node1);
+            var index2 = this.getChildIndex(node2);
+
+            this.children[index1] = node2;
+            this.children[index2] = node1;
+        };
+
+
+        this.addChildAfter = function() {
+
+        };
+
+
+        this.addChildBefore = function() {
+
+        };
+
+
         function parseNodes(nodesDatas) {
             var node = new Node(nodesDatas);
 

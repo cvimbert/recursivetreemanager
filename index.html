@@ -10,7 +10,7 @@
 <body>
 <div id="container" style="position: absolute; left: 500px; top: 500px; transform: scale(0.5)"></div>
 <script>
-    require(["recursivetreemanager", "pinit", "marionette", "jquery", "Draggable"], function(RecursiveTreeManager, PinIt, Marionette, $, Draggable) {
+    require(["recursivetreemanager", "pinit", "marionette", "jquery", "Draggable", "backbone"], function(RecursiveTreeManager, PinIt, Marionette, $, Draggable, Backbone) {
 
         var datas = {
             text: "A masquer",
@@ -190,7 +190,9 @@
 
         var nodes = treeManager.getNodesList();
 
-        var testView = Marionette.ItemView.extend({
+        var TestModel = Backbone.Model.extend();
+
+        var TestView = Marionette.ItemView.extend({
             template: function() {
                 return '<div class="elem" style="background-color: red; position: absolute; width: 50px; height: 50px"></div>';
             },
@@ -203,7 +205,12 @@
             var elem = $("<div></div>");
             $("#container").append(elem);
 
-            var view = new testView({
+            var model = new TestModel({
+                node: node
+            });
+
+            var view = new TestView({
+                model: model,
                 el: elem
             });
 
