@@ -186,8 +186,6 @@
             this.createChildNode = function(datas) {
                 var node = new Node(datas);
                 node.parent = this;
-                config.nodeAdded(node);
-                config.addedFinished([node], manager);
                 return node;
             };
 
@@ -195,6 +193,8 @@
             this.addChildAfter = function(datas) {
                 var node = this.createChildNode(datas);
                 this.children.push(node);
+                config.nodeAdded(node);
+                config.addedFinished([node], manager);
             };
 
 
