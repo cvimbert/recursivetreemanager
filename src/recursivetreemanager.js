@@ -16,11 +16,14 @@
 
     return function(config) {
 
+        var manager = this;
+
         var Node = function(nodeData) {
+            var t = this;
             this.parent = null;
             this.children = [];
 
-            var attributes = {};
+            this.attributes = {};
 
             this.dynamicAttributes = new DynamicPoint({
                 x: 0,
@@ -53,8 +56,8 @@
 
 
             this.getSetting = function(name) {
-                if (attributes.settings && attributes.settings[name]) {
-                    return attributes.settings[name];
+                if (this.attributes.settings && this.attributes.settings[name]) {
+                    return this.attributes.settings[name];
                 } else {
                     return null;
                 }
@@ -137,6 +140,67 @@
                         divPoint.node.recursiveGeneratePositions(basePoint, divPoint.point, divPoint.angle, _.clone(stack));
                     });
                 }
+            };
+
+
+            this.getChildIndex = function(node) {
+                return this.children.lastIndexOf(node);
+            };
+
+
+            this.deleteChildReference = function(node) {
+                var index = this.getChildIndex(node);
+
+                if (index !== -1) {
+                    delete this.children[index];
+                }
+            };
+
+
+            this.delete = function() {
+
+                _.each(this.children, function(child) {
+                    child.delete();
+                });
+
+                if (this.parent) {
+                    this.parent.deleteChildReference(this);
+                }
+            };
+
+
+            this.swapWithBrother = function(node) {
+                this.parent.swapChildren(this, node);
+            };
+
+
+            this.swapChildren = function(node1, node2) {
+                var index1 = this.getChildIndex(node1);
+                var index2 = this.getChildIndex(node2);
+
+                this.children[index1] = node2;
+                this.children[index2] = node1;
+            };
+
+
+            this.createChildNode = function(datas) {
+                var node = new Node(datas);
+                node.parent = this;
+                config.nodeAdded(node);
+                config.addedFinished([node], manager);
+                return node;
+            };
+
+
+            this.addChildAfter = function(datas) {
+                var node = this.createChildNode(datas);
+                this.children.push(node);
+            };
+
+
+            this.addChildBefore = function(datas) {
+                var node = this.createChildNode(datas);
+                //this.children.
             };
 
 
@@ -243,7 +307,7 @@
 
             _.each(nodeData, function(data, key) {
                 if (key !== "children") {
-                    attributes[key] = data;
+                    t.attributes[key] = data;
                 }
             });
         };
@@ -254,53 +318,8 @@
         };
 
 
-        this.getChildIndex = function(node) {
-            return this.children.lastIndexOf(node);
-        };
-
-
-        this.deleteChildReference = function(node) {
-            var index = this.getChildIndex(node);
-
-            if (index !== -1) {
-                delete this.children[index];
-            }
-        };
-
-
-        this.delete = function() {
-
-            _.each(this.children, function(child) {
-                child.delete();
-            });
-
-            if (this.parent) {
-                this.parent.deleteChildReference(this);
-            }
-        };
-
-
-        this.swapWithBrother = function(node) {
-            this.parent.swapChildren(this, node);
-        };
-
-
-        this.swapChildren = function(node1, node2) {
-            var index1 = this.getChildIndex(node1);
-            var index2 = this.getChildIndex(node2);
-
-            this.children[index1] = node2;
-            this.children[index2] = node1;
-        };
-
-
-        this.addChildAfter = function() {
-
-        };
-
-
-        this.addChildBefore = function() {
-
+        this.generateTreePositions = function() {
+            rootNode.recursiveGeneratePositions({x: 400, y: 300}, {x: 400, y: 300}, {}, []);
         };
 
 
@@ -315,15 +334,28 @@
                 });
             }
 
+            config.nodeAdded(node);
+
             return node;
         }
 
 
+
+        $("#test").on("click", function() {
+            rootNode.addChildAfter({
+                text: "test",
+                id: "id_test"
+            });
+
+            //rootNode.recursiveGeneratePositions({x: 400, y: 300}, {x: 400, y: 300}, {}, []);
+        });
+
+
         // Initialization
         var rootNode = parseNodes(config.datas);
+        config.addedFinished(rootNode.getNodes(), this);
+
 
         //console.log(rootNode.getNodes());
-
-        rootNode.recursiveGeneratePositions({x: 400, y: 300}, {x: 400, y: 300}, {}, []);
     }
 });

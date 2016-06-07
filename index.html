@@ -8,170 +8,119 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<div id="container" style="position: absolute; left: 500px; top: 500px; transform: scale(0.5)"></div>
+<div id="container" style="position: absolute; left: 200px; top: 200px; transform: scale(1)"></div>
 <script>
     require(["recursivetreemanager", "pinit", "marionette", "jquery", "Draggable", "backbone"], function(RecursiveTreeManager, PinIt, Marionette, $, Draggable, Backbone) {
 
         var datas = {
-            text: "A masquer",
+            text: "1",
             id: "t0",
             ico_type: 2,
             settings: {
-                rotation: Math.PI / 4 * 3,
+                //rotation: Math.PI / 4 * 3,
                 deployed: true
             },
             children: [
                 {
-                    text: "LES COMMENTAIRES",
+                    text: "11",
                     id: "t4",
                     ico_type: 0,
                     settings: {
-                        angularMargin: 0.8,
-                        noLine: true,
-                        xOffset: 38,
-                        yOffset: 5
+
                     },
                     children: [
                         {
-                            text: "RACHI",
+                            text: "111",
                             id: "t4-1",
                             ico_type: 1
                         },
                         {
-                            text: "RAMBAM",
+                            text: "112",
                             id: "t4-2",
                             ico_type: 1
                         }
                     ]
                 },
                 {
-                    text: "LE TANAKH",
+                    text: "12",
                     id: "t3",
                     ico_type: 0,
                     settings: {
-                        noLine: true,
-                        angularMargin: 0
+
                     },
                     children: [
                         {
-                            text: "LA TORAH",
+                            text: "121",
                             id: "t3-1",
                             ico_type: 1,
                             settings: {
-                                fromAngle: Math.PI - 0.6,
-                                toAngle: -0.4,
-                                xOffset: -100
+
                             },
-                            children: [
-                                {
-                                    text: "LE DEUTÉRONOME",
-                                    id: "t3-1-1",
-                                    ico_type: 2
-                                },
-                                {
-                                    text: "LES NOMBRES",
-                                    id: "t3-1-2",
-                                    ico_type: 2
-                                },
-                                {
-                                    text: "LE LÉVITIQUE",
-                                    id: "t3-1-3",
-                                    ico_type: 2
-                                },
-                                {
-                                    text: "L’EXODE",
-                                    id: "t3-1-4",
-                                    ico_type: 2
-                                },
-                                {
-                                    text: "LA GENÈSE",
-                                    id: "t3-1-5",
-                                    ico_type: 2
-                                }
-                            ]
+                            children: []
                         },
                         {
-                            text: "LES NÉVIIM",
+                            text: "122",
                             id: "t3-2",
                             ico_type: 1,
                             settings: {
-                                radius: 260
+
                             },
-                            children: [
-                                {
-                                    text: "LES PREMIERS PROPHÈTES",
-                                    id: "t3-2-1",
-                                    ico_type: 2
-                                },
-                                {
-                                    text: "LES DERNIERS PROPHÈTES",
-                                    id: "t3-2-2",
-                                    ico_type: 2
-                                }
-                            ]
+                            children: []
                         },
                         {
-                            text: "LES KÉTOUVIM",
+                            text: "123",
                             id: "t3-3",
                             ico_type: 1,
                             settings: {
-                                fromAngle: 5,
-                                toAngle: 5 + Math.PI / 2 + 0.2,
-                                radius: 260
+
                             },
-                            children: [
-                                {
-                                    text: "LES SEPT LIVRES DES KÉTOUVIM",
-                                    id: "t3-3-1",
-                                    ico_type: 2
-                                },
-                                {
-                                    text: "LES CINQ ROULEAUX",
-                                    id: "t3-3-2",
-                                    ico_type: 2
-                                }
-                            ]
+                            children: []
                         }
                     ]
                 },
                 {
-                    text: "LE TALMUD",
+                    text: "14",
                     id: "t2",
                     ico_type: 0,
                     settings: {
-                        noLine: true,
-                        angularMargin: 0.7,
-                        yOffset: -40
+
                     },
                     children: [
                         {
-                            text: "LA MICHNA",
+                            text: "141",
                             id: "t2-1",
                             ico_type: 1
                         },
                         {
-                            text: "LA GUEMARA",
+                            text: "142",
                             id: "t2-2",
                             ico_type: 1
                         }
                     ]
                 },
                 {
-                    text: "LE MIDRACH",
+                    text: "15",
                     id: "t1",
                     ico_type: 0,
                     settings: {
-                        noLine: true
+
                     }
                 }
             ]
         };
 
-        var treeManager = new RecursiveTreeManager({
-            datas: datas,
-            radiusList: [200, 290, 290],
-            angularMargin: 0.2
+
+        var TestModel = Backbone.Model.extend();
+
+        var TestView = Marionette.ItemView.extend({
+            template: function(serializedModel) {
+                return _.template('<div class="elem" style="background-color: red; position: absolute; width: 50px; height: 50px"><%= text %></div>')(serializedModel);
+            },
+            onRender: function() {
+                Draggable.create($(".elem", this.$el));
+            }
         });
+
 
         var pinIt = new PinIt({
             props: {
@@ -188,26 +137,15 @@
             }
         });
 
-        var nodes = treeManager.getNodesList();
 
-        var TestModel = Backbone.Model.extend();
+        var views = {};
 
-        var TestView = Marionette.ItemView.extend({
-            template: function() {
-                return '<div class="elem" style="background-color: red; position: absolute; width: 50px; height: 50px"></div>';
-            },
-            onRender: function() {
-                Draggable.create($(".elem", this.$el));
-            }
-        });
 
-        _.each(nodes, function(node) {
+        function addNode(node) {
             var elem = $("<div></div>");
             $("#container").append(elem);
 
-            var model = new TestModel({
-                node: node
-            });
+            var model = new TestModel(node.attributes);
 
             var view = new TestView({
                 model: model,
@@ -215,13 +153,38 @@
             });
 
             view.render();
+            views[node.attributes.id] = view;
+        }
 
-            pinIt.bind(node.dynamicAttributes, $(".elem", view.$el));
 
+        function deleteNode(node) {
+
+        }
+
+
+        function addedFinished(nodes, manager) {
+
+            manager.generateTreePositions();
+
+            _.each(nodes, function(node) {
+                var view = views[node.attributes.id];
+                pinIt.bind(node.dynamicAttributes, $(".elem", view.$el));
+            });
+        }
+
+
+        var treeManager = new RecursiveTreeManager({
+            datas: datas,
+            radiusList: [200, 290, 290],
+            angularMargin: 0,
+            nodeAdded: addNode,
+            nodeDeleted: deleteNode,
+            addedFinished: addedFinished
         });
 
-
+        var nodes = treeManager.getNodesList();
     });
 </script>
+<div id="test" style="width: 40px; height: 40px; background-color: blue"></div>
 </body>
 </html>
